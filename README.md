@@ -43,7 +43,7 @@ Les valeurs détectées sont systématiquement masquées : un rapport de CI est 
 | `generic-secret-assignment` | moyenne | `PASSWORD`, `TOKEN`, `API_KEY`… affectés à une chaîne littérale |
 | `sensitive-file-name` | moyenne | `.env`, `id_rsa`, `*.pem` non exclus par `.gitignore` |
 
-Trois filtres limitent les faux positifs : l'**entropie de Shannon** sur les règles génériques, une liste de **valeurs d'exemple** (`changeme`, `your-token`, `AKIAIOSFODNN7EXAMPLE`…), et la reconnaissance des **interpolations de variables** (`$TOKEN`, `${TOKEN}`, `{{ token }}`), qui désignent un secret sans le contenir.
+Trois filtres limitent les faux positifs : l'**entropie de Shannon** sur les règles génériques, une liste de **valeurs d'exemple**, anglaises et françaises (`changeme`, `your-token`, `AKIAIOSFODNN7EXAMPLE`, `motdepasse`, `votre-jeton`…), et la reconnaissance des **interpolations de variables** (`$TOKEN`, `${TOKEN}`, `{{ token }}`), qui désignent un secret sans le contenir.
 
 Une ligne portant le commentaire `secret-scan:allow` est ignorée.
 

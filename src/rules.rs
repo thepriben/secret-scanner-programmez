@@ -179,6 +179,7 @@ pub const SUSPICIOUS_FILE_EXTENSIONS: &[&str] = &["pem", "key", "p12", "pfx", "k
 /// La documentation d'un projet est remplie de secrets factices ; les signaler
 /// noierait les vraies alertes.
 const PLACEHOLDER_MARKERS: &[&str] = &[
+    // Marqueurs anglais.
     "example",
     "changeme",
     "change_me",
@@ -195,6 +196,17 @@ const PLACEHOLDER_MARKERS: &[&str] = &[
     "fixme",
     "notreal",
     "fake",
+    // Marqueurs français : la documentation d'un projet francophone emploie
+    // ses propres valeurs factices.
+    "exemple",
+    "motdepasse",
+    "mot_de_passe",
+    "motdepasseici",
+    "votre-",
+    "votre_",
+    "utilisateur",
+    "aremplacer",
+    "a_remplacer",
 ];
 
 /// Repère les valeurs manifestement destinées à la documentation.
@@ -264,6 +276,13 @@ mod tests {
         assert!(looks_like_placeholder("your-token-here"));
         assert!(looks_like_placeholder("<API_KEY>"));
         assert!(!looks_like_placeholder("Zk29LmQp7Rt4Xw8Nv1Bd"));
+    }
+
+    #[test]
+    fn une_valeur_dexemple_francophone_est_ecartee() {
+        assert!(looks_like_placeholder("motdepasse"));
+        assert!(looks_like_placeholder("votre-jeton"));
+        assert!(looks_like_placeholder("cle_dexemple"));
     }
 
     #[test]
