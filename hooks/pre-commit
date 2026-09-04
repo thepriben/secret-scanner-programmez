@@ -1,0 +1,38 @@
+#!/usr/bin/env bash
+# Hook Git exécuté avant l'enregistrement d'un commit.
+#
+# Installation :
+#   cargo install --path .
+#   cp hooks/pre-commit .git/hooks/pre-commit
+#   chmod +x .git/hooks/pre-commit
+#
+# Un code de retour non nul annule le commit.
+
+set -uo pipefail
+
+scanner="${SECRET_SCAN_BIN:-secret-scan}"
+
+if ! command -v "$scanner" >/dev/null 2>&1; then
+    echo "pre-commit : '$scanner' est introuvable, contrôle des secrets ignoré." >&2
+    exit 0
+fi
+
+# --staged limite l'analyse aux fichiers de l'index, c'est-à-dire à ce que le
+# commit s'apprête réellement à enregistrer.
+if "$scanner" --staged; then
+    exit 0
+fi
+
+cat >&2 <<'MESSAGE'
+
+Commit interrompu : un secret potentiel a été trouvé dans les fichiers indexés.
+
+  · Si l'alerte est fondée, retirez la valeur du code, placez-la dans une
+    variable d'environnement, puis révoquez le secret auprès du fournisseur.
+  · Si l'alerte est un faux positif, ajoutez le commentaire
+    « secret-scan:allow » en fin de ligne.
+  · Pour passer outre ponctuellement : git commit --no-verify
+
+MESSAGE
+
+exit 1
