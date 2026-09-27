@@ -1,6 +1,6 @@
 # Secrets, expressions régulières et Rust : détecter les tokens oubliés en construisant son propre scanner
 
-> Code compagnon de l'article *« Secrets, expressions régulières et Rust : détecter les tokens oubliés en construisant son propre scanner »*, **_Programmez!_** hors-série sécurité, 2026.
+> Code compagnon de l'article *« Secrets, expressions régulières et Rust : détecter les tokens oubliés en construisant son propre scanner »*, **_Programmez!_** hors-série n°24 « Hack Sécurité », pp. 23-27, 2026.
 
 Un outil en ligne de commande écrit en [Rust](https://www.rust-lang.org/) qui repère les secrets laissés en clair dans un dépôt — jetons GitHub, clés AWS, JWT, mots de passe, fichiers `.env`, URLs contenant des identifiants — **avant** qu'un `git commit` ne les enregistre. L'article s'en sert de fil conducteur pour traiter trois questions : comment décrire un secret par une expression régulière, comment écarter les faux positifs, et comment brancher le résultat sur un hook Git et une GitHub Action.
 
